@@ -11,7 +11,7 @@ use App\component\Content;
  <div class="overflownone">
     <div class="col-md-12 nopaddingleft nopaddingright">
         <div class="slideshow">
-            <div id="myCarousel" class="slide carousel-fade" style="height: 350px;">
+            <div id="myCarousel" class="slide carousel-fade" style="height: 400px;">
                 <div class="carousel-inner" id="carousel-warpper" >
                     <div  class="item active item-slide" style="background-image: url(http://takemetoburma.com/photos/share/1548644724-getImage.gif); background-position: 0px -80px; background-size: cover;">                        
                     </div>  

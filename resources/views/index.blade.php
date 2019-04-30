@@ -57,12 +57,13 @@ use App\component\Content;
 		</div>
 
 	</div>
-
+<div style="margin-top: 50px;"></div>
 </div>
+
 
 <!-- our activities  -->
 
-<div class="">
+<!-- <div class="">
 
 	<div class="container">
 
@@ -74,7 +75,7 @@ use App\component\Content;
 
 	</div>
 
-</div>
+</div> -->
 
 
 

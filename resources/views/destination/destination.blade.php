@@ -7,20 +7,22 @@
 <?php 
 use App\component\Content; 
     if (isset($prov->province_photo)) {
-         $image = Content::urlImage( $prov->province_photo, '/photos/share/');
+         $image    = Content::urlImage( $prov->province_photo, '/photos/share/');
+        
     }else {
-        $image = 'img/bagan.jpg';
+        $image     = 'img/bagan.jpg';
+   
     }
 ?>
 @section('content')
 @widget('menu')
 <div class="overflownone">
     <div class="col-md-12 nopaddingleft nopaddingright">
-        <div id="myCarousel" class="slide carousel-fade" style="height:400px;">
+        <div id="myCarousel" class="slide carousel-fade" style="height:420px;">
             <div class="carousel-inner" id="carousel-warpper" >
                 <div class="item active item-slide" style="background-image: url(http://takemetoburma.com/photos/share/1548644336-golf_communities.jpg); background-position: 0px 0px; background-size: cover;">
                 </div>  
-            </div>    
+            </div>      
         </div>
     </div>
     <div class="clearfix"></div>
@@ -63,18 +65,23 @@ use App\component\Content;
                     <label for="location" style="font-size: 12px;font-weight: 400;">Destinations</label>
                     <select class="form-control input-sm  textbox_color" id="location" name="location" onchange="this.form.submit()">
                         <option value="">--select--</option>
-                    <?php $getdata  = \App\Tour::where(['country_id'=> 122,'status'=>1])->get();
-                           $pro_name = $getdata->groupBy('province_id');
-                    foreach ($pro_name as $key => $value): 
-                             $data= \App\Province::whereIn('id',[$key])->get();
-                             foreach ($data as $geta):?>
+                 
+                             <?php foreach (\DB::table('province as pro')
+        ->join('tbl_tours as tour', 'tour.province_id', '=', 'pro.id')
+        ->join('tour_web as tweb', 'tour.id' ,'=', 'tweb.tour_id')
+        ->select('pro.*')
+        ->groupBy('tour.province_id')
+        ->where(['tour.status'=>1,'pro.province_status'=>1,'tour.country_id'=>122,'tweb.web_id'=>config('app.web')])
+        ->inRandomOrder()
+        ->limit(6)
+        ->orderBy('pro.province_order', 'DESC')
+        ->get() as $geta):?>
 
             <option value="{{$geta->slug}}" 
             <?=  isset($_GET['location']) ? ($_GET['location']== $geta->slug?'selected': '') : '' ?> >{{$geta->province_name}}
             </option>
              <?php endforeach ?>    
-           <?php endforeach ?>
-                    </select>
+                           </select>
                 </form>
                 <div class="row">
                     <hr>
@@ -110,23 +117,48 @@ use App\component\Content;
 
  
 
-@if(isset($prov))
+ @if(isset($prov->province_photo))
         <div class="col-sm-12">
             <div class="example" >
-                <center>
-                 <div class="example" style=" width: 298px; margin: 0; padding: 0; border-radius: 8px;">
-             <img style="height: 200px; border-radius: 8px;" src="https://takemetoburma.com/photos/share/thumbs/{{{ $prov->province_photo or ''}}}" alt="Image">
+                <div style="text-align: center;">
+                    <img src="{{$image}}"  style="width:70%; height: 300px;" alt="Image">
+                </div>
+                <div style="font-family: inherit; font-weight: 500; line-height: 1.1; margin-top: 20px;">{!! $prov->province_intro or '' !!}</div>        
             </div>
-           </center>
-                <div style="    font-family: 'Open Sans',Arial,sans-serif !important; font-weight: 500; line-height: 1.1; margin-top: 20px;">{!! $prov->province_intro or '' !!}</div> 
-             
-
-                   
-            
- </div>
-            
         </div>
-    @endif
+        @else
+        <div class="col-sm-12">
+            <div class="example" style="margin-top: 0;">
+                <div class="row">                        
+                    <div class="section-title welcome-section widget-title">
+                        <h2><b>All Popurlar Place</b></h2>
+                    </div>
+                    @foreach(\DB::table('province as pro')
+                                ->join('tbl_tours as tour', 'tour.province_id', '=', 'pro.id')
+                                ->join('tour_web as tweb', 'tour.id' ,'=', 'tweb.tour_id')
+                                ->select('pro.*')
+                                ->groupBy('tour.province_id')
+                                ->where(['tour.status'=>1,'pro.province_status'=>1,'tour.country_id'=>122,'tweb.web_id'=>config('app.web')])
+                                ->orderBy('pro.province_order', 'DESC')
+                                ->get(); as $con)
+                    <div class="col-sm-4 col-xs-12 golf-club wow fadeInUp animated" data-wow-delay="1s" style="visibility: visible; animation-name: fadeInUp;" >
+                        <div class="row"  >
+                          <div class="form-group item-tour" style="margin:13px; position: relative;">
+                            <span></span>
+                            <a href="{{route('getDest')}}?location={{$con->slug}}">
+                              <div class="caption" >
+                                <h4 ><b>{{$con->province_name}}</b></h4>
+                                </div>
+                              <img src="{{Content::urlImage($con->province_photo)}}" style="width: 100%; height: 100%; z-index: -2;" >
+                            </a>
+                          </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>                       
+        @endif
 
          <div class="col-sm-12">
             <div class="example">

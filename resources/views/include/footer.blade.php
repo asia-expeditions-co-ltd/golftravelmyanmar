@@ -10,7 +10,7 @@
                 <i class="fa fa-phone-square"></i>&nbsp;+95 (9) 401 533 484  <br> 
                 <!-- <abbr title="Phone">Hotline: -->
                 
-                <i class="fa fa-envelope-o"></i> info [at] golftravelmyanmar.com
+                <i class="fa fa-envelope-o"></i> info@golftravelmyanmar.com
             </abbr></address>	            
 		</div>		
 		<div class="col-md-1"></div>		

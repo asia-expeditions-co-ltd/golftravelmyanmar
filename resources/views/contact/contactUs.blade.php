@@ -12,9 +12,9 @@
 <div class="overflownone">
     <div class="col-md-12 nopaddingleft nopaddingright">
         <div class="slideshow">
-            <div id="myCarousel" class="slide carousel-fade" style="height: 350px;">
+            <div id="myCarousel" class="slide carousel-fade" style="height: 400px;">
                 <div class="carousel-inner" id="carousel-warpper" >
-                    <div class="item active item-slide" style="background-image: url(http://2f-design.fr/themes/tee-wp/wp-content/uploads/2014/03/3.jpg); background-position:0px -80px;">                        
+                    <div class="item active item-slide" style="background-image: url(http://takemetoburma.com/photos/share/myanmar.jpg); background-position:0px -80px;">                        
                     </div>  
                 </div>    
             </div>
